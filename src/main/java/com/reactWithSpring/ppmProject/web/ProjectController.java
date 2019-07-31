@@ -50,4 +50,11 @@ public class ProjectController {
 		return new ResponseEntity<Project>(project,HttpStatus.OK);
 	}
 	
+	@GetMapping("/all")
+	public ResponseEntity<?> getAllProject()
+	{
+		
+		return new ResponseEntity<Iterable>(projectService.getAllProjects(),HttpStatus.OK);
+	}
+	
 }
