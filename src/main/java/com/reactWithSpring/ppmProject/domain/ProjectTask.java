@@ -2,14 +2,21 @@ package com.reactWithSpring.ppmProject.domain;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class ProjectTask {
@@ -37,6 +44,11 @@ public class ProjectTask {
 	
 	@Column(updatable=false)
 	private String projectIdentifier;
+	
+	@ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.REFRESH)
+	@JoinColumn(name="backlog_id",nullable=false,updatable=false)
+	@JsonIgnore
+	private Backlog backlog;
 	
 	public ProjectTask() {
 		
@@ -103,6 +115,14 @@ public class ProjectTask {
 		this.projectIdentifier = projectIdentifier;
 	}
 	
+	public Backlog getBacklog() {
+		return backlog;
+	}
+
+	public void setBacklog(Backlog backlog) {
+		this.backlog = backlog;
+	}
+
 	@PrePersist
 	protected void onCreate() {
 		created_At=new Date();
