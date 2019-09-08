@@ -31,6 +31,7 @@ public class BacklogController {
 	@PostMapping("/{projectIdentifier}")
 	public ResponseEntity<?> addProjectTaskToProject(@Valid @RequestBody ProjectTask projectTask,BindingResult result,@PathVariable String projectIdentifier){
 		ResponseEntity<?> errorMap= errorMapService.mapErrors(result);
+	
 		if(errorMap!=null)
 		{
 			return errorMap;
@@ -44,5 +45,12 @@ public class BacklogController {
 	{
 		Iterable<ProjectTask> projectList=projectTaskService.getProjectTasksById(projectIdentifier);
 		return new ResponseEntity<Iterable>(projectList,HttpStatus.OK);
+	}
+	
+	@GetMapping("/{projectIdentifier}/{projectTaskSequence}")
+	public ResponseEntity<?> findProjectTaskBySequence(@PathVariable String projectIdentifier,@PathVariable String projectTaskSequence)
+	{
+		ProjectTask projectTask=projectTaskService.findProjectTaskBySequence(projectIdentifier,projectTaskSequence);
+		return new ResponseEntity<ProjectTask>(projectTask,HttpStatus.OK);
 	}
 }

@@ -2,20 +2,22 @@ package com.reactWithSpring.ppmProject.exceptions;
 
 public class ProjectidExceptionResponse {
 	
-	private String projectIdentifier;
+	private String errorMessage;
 
-	public String getProjectIdentifier() {
-		return projectIdentifier;
-	}
-
-	public void setProjectIdentifier(String projectIdentifier) {
-		this.projectIdentifier = projectIdentifier;
-	}
-
-	public ProjectidExceptionResponse(String projectIdentifier) {
+	public ProjectidExceptionResponse(String errorMessage) {
 		
-		this.projectIdentifier = projectIdentifier;
+		this.errorMessage = errorMessage;
 	}
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+	
+	
 	
 	
 }
