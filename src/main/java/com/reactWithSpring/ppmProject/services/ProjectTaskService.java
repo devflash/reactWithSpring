@@ -26,20 +26,25 @@ public class ProjectTaskService {
 		{
 			throw new ProjectidException("project id "+ projectIdentifier+" doesn't exist");
 		}
-		projectTask.setBacklog(backlog);
-		Integer backlogSequence=backlog.getPTSequence();
-		backlogSequence++;
-		backlog.setPTSequence(backlogSequence);
-		projectTask.setProjectSequence(projectIdentifier+"-"+backlogSequence);
-		projectTask.setProjectIdentifier(projectIdentifier);
-		if(projectTask.getPriority()==null)
+		if(projectTask.getId()==null)
 		{
-			projectTask.setPriority(3);
+			
+			projectTask.setBacklog(backlog);
+			Integer backlogSequence=backlog.getPTSequence();
+			backlogSequence++;
+			backlog.setPTSequence(backlogSequence);
+			projectTask.setProjectSequence(projectIdentifier+"-"+backlogSequence);
+			projectTask.setProjectIdentifier(projectIdentifier);
+			if(projectTask.getPriority()==null)
+			{
+				projectTask.setPriority(3);
+			}
+			if(projectTask.getStatus()=="" || projectTask.getStatus()==null)
+			{
+				projectTask.setStatus("TO-DO");
+			}
 		}
-		if(projectTask.getStatus()=="" || projectTask.getStatus()==null)
-		{
-			projectTask.setStatus("TO-DO");
-		}
+		
 		return projectTaskRepository.save(projectTask);
 	}
 
@@ -65,6 +70,13 @@ public class ProjectTaskService {
 			throw new ProjectidException("Project task doesn't exist");
 		}
 		return projectTask;
+	}
+
+	public void deleteProjectTaskBySequence(String projectIdentifier, String projectTaskSequence) {
+		ProjectTask projectTask=findProjectTaskBySequence(projectIdentifier, projectTaskSequence);
+		
+		projectTaskRepository.delete(projectTask);
+		
 	}
 	
 	

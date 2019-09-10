@@ -46,7 +46,8 @@ public class ProjectService {
 		Project project=projectRepository.findByProjectIdentifier(projectId.toUpperCase());
 		if(project==null)
 		{
-			throw new ProjectidException("project id '"+projectId+"' doesn't exist.");
+			
+			throw new ProjectidException("project id=>'"+projectId+"':: doesn't exist.");
 		}
 		return project;
 	}
